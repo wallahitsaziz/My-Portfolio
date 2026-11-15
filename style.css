@@ -1,0 +1,128 @@
+/* Variables: the approved colours (plus a darker grey for small text), fonts and the one spacing scale */
+:root {
+  --ink: #222222; --muted: #6B6B6B; --line: #7B7B7B; --surface: #F5F5F5; --white: #FFFFFF;
+  --s1: 8px; --s2: 24px; --s3: 40px; --s4: 72px;
+  --edge: clamp(16px, 4vw, 32px);
+  --side: max(var(--edge), calc((100% - 960px) / 2));
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans: "Inter", Arial, sans-serif;
+}
+
+/* Base elements: page, headings, paragraphs, links and images */
+* { box-sizing: border-box; }
+html { scroll-padding-top: 64px; }
+body { margin: 0; background: var(--white); color: var(--ink); font-family: var(--sans); font-size: 1rem; line-height: 1.6; }
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.2; margin: var(--s3) 0 var(--s1); }
+h1 { font-size: clamp(2.25rem, 6vw, 3.25rem); margin-top: 0; }
+h2 { font-size: 1.75rem; margin-top: 0; }
+h3 { font-size: 1.25rem; }
+p, ul { margin: 0 0 var(--s2); max-width: 68ch; }
+a { color: var(--ink); text-underline-offset: 3px; }
+a:hover { color: var(--muted); }
+a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+img { display: block; max-width: 100%; height: auto; }
+section { padding: var(--s4) var(--side); }
+
+/* Navigation bar (#nav): sticky flexbox row with the name on the left and links on the right */
+#nav {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 0 var(--s2); padding: var(--s1) var(--side);
+  background: var(--white); border-bottom: 1px solid var(--line);
+}
+.nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--s1); margin: 0; padding: 0; list-style: none; }
+.nav-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--s1); text-decoration: none; }
+.nav-link:hover { text-decoration: underline; }
+.brand { padding-left: 0; font-family: var(--serif); font-weight: 600; font-size: 1.125rem; }
+
+/* Buttons (.button): filled dark by default, white with a thin outline for .button-outline */
+.buttons { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); }
+.button {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 var(--s2);
+  background: var(--ink); color: var(--white); border: 1px solid var(--ink); border-radius: 4px;
+  font-weight: 600; text-decoration: none;
+}
+.button:hover { background: var(--muted); border-color: var(--muted); color: var(--white); }
+.button-outline { background: var(--white); color: var(--ink); }
+.button-outline:hover { background: var(--surface); border-color: var(--ink); color: var(--ink); }
+
+/* Dark mode switch: a small checkbox drawn as a switch, with a moon icon (a sun when on) and no JavaScript */
+#nav nav { margin-left: auto; }
+.switch { display: inline-flex; align-items: center; gap: var(--s1); min-height: 44px; cursor: pointer; }
+.switch svg { order: -1; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.switch .icon-sun, .switch input:checked ~ .icon-moon { display: none; }
+.switch input:checked ~ .icon-sun { display: block; }
+.switch input { appearance: none; -webkit-appearance: none; position: relative; width: 40px; height: 22px; margin: 0; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); cursor: pointer; }
+.switch input::before { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); }
+.switch input:checked { background: var(--ink); border-color: var(--ink); }
+.switch input:checked::before { left: 20px; background: var(--white); }
+.switch input:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* Dark mode: ticking #theme swaps the colour variables; the resume sheet stays white like paper */
+body:has(#theme:checked) { --ink: #F8F8F8; --muted: #B8B8B8; --surface: #2C2C2C; --white: #222222; }
+body:has(#theme:checked) .sheet { --ink: #222222; --muted: #6B6B6B; --white: #FFFFFF; }
+
+/* Hero (#hero): name, one sentence and the two main buttons on the left, portrait on the right */
+#hero { display: grid; grid-template-columns: 1fr 280px; align-items: center; gap: var(--s3); padding-top: 96px; background: var(--surface); }
+.portrait { width: 100%; height: auto; aspect-ratio: 8 / 9; object-fit: cover; border-radius: 4px; }
+.lead { max-width: 30ch; font-family: var(--serif); font-size: clamp(1.375rem, 3.5vw, 1.75rem); line-height: 1.35; }
+
+/* Work (#work): flat cards in a grid, with the screenshots in a two-column grid inside the first card */
+.cards { display: grid; gap: var(--s2); }
+.card { padding: var(--s2); background: var(--surface); }
+.card h3 { margin-top: 0; }
+.dates { color: var(--muted); }
+.shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s1); margin-top: var(--s2); }
+.shots img { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: var(--white); border: 1px solid var(--line); }
+
+/* Skills (#skills): each skill name beside the proof for it */
+.skill-list { margin: 0; }
+.skill { display: grid; grid-template-columns: 14rem 1fr; gap: var(--s1) var(--s2); margin-bottom: var(--s2); }
+.skill dt { font-weight: 600; }
+.skill dd { max-width: 62ch; margin: 0; }
+
+/* Resume (#resume): a white one-page sheet on the light grey section */
+#resume { background: var(--surface); }
+.download a { display: inline-flex; align-items: center; min-height: 44px; }
+.sheet { max-width: 794px; padding: var(--s3); background: var(--white); color: var(--ink); font-size: 0.95rem; line-height: 1.5; }
+.sheet p, .sheet ul { max-width: none; margin: 0 0 var(--s1); }
+.sheet ul { padding-left: 20px; }
+.sheet h4 { margin: var(--s2) 0 var(--s1); font-size: 1.125rem; }
+.resume-name { margin: 0; font-size: 1.75rem; }
+.resume-contact { color: var(--muted); }
+.role { display: flex; justify-content: space-between; gap: var(--s2); font-weight: 600; }
+.role .dates { flex-shrink: 0; font-weight: 400; }
+
+/* Footer: the last line of the page */
+footer { padding: var(--s3) var(--side); color: var(--muted); }
+footer p { margin: 0; }
+
+/* Small screens (under 700px): the top bar wraps onto rows, and the buttons, screenshots, skills and resume lines in one column */
+@media (max-width: 699px) {
+  section { padding-top: var(--s3); padding-bottom: var(--s3); }
+  #hero { grid-template-columns: 1fr; padding-top: var(--s3); }
+  .portrait { max-width: 240px; }
+  #nav { padding-top: 0; padding-bottom: var(--s1); }
+  .brand { margin-right: auto; }
+  #nav nav { order: 3; flex-basis: 100%; margin-left: 0; }
+  .buttons { flex-direction: column; align-items: stretch; }
+  .shots, .skill { grid-template-columns: 1fr; }
+  .skill { gap: 0; }
+  .sheet { padding: var(--s2) var(--edge); }
+  .role { flex-direction: column; gap: 0; }
+}
+
+/* Print: show only the resume, black on white, on one A4 page */
+@page { size: A4; margin: 12mm; }
+@media print {
+  #nav, #hero, #story, #work, #skills, #contact, footer, #resume > h2, .download { display: none; }
+  body, #resume { background: #FFFFFF; color: #000000; }
+  #resume { padding: 0; }
+  .sheet { max-width: none; padding: 0; font-size: 9.5pt; line-height: 1.35; }
+  .sheet, .sheet *, .sheet a { color: #000000; }
+  .sheet a { text-decoration: none; }
+  .resume-name { font-size: 18pt; }
+  .sheet h4 { margin: 10pt 0 3pt; font-size: 11pt; }
+  .sheet p, .sheet ul { margin-bottom: 3pt; }
+}
