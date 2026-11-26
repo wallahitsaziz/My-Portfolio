@@ -98,14 +98,20 @@ body:has(#theme:checked) .sheet { --ink: #222222; --muted: #6B6B6B; --white: #FF
 footer { padding: var(--s3) var(--side); color: var(--muted); }
 footer p { margin: 0; }
 
-/* Small screens (under 700px): the top bar wraps onto rows, and the buttons, screenshots, skills and resume lines in one column */
+/* Small screens (under 700px): the photo sits beside my name, the top bar is two rows, and the buttons, screenshots, skills and resume lines in one column */
 @media (max-width: 699px) {
   section { padding-top: var(--s3); padding-bottom: var(--s3); }
-  #hero { grid-template-columns: 1fr; padding-top: var(--s3); }
-  .portrait { max-width: 240px; }
+  #hero { grid-template-columns: 1fr 112px; gap: 0 var(--s2); align-items: center; padding-top: var(--s3); }
+  .hero-text { display: contents; }
+  #hero h1 { grid-column: 1; grid-row: 1; margin: 0; font-size: 2rem; }
+  .portrait { grid-column: 2; grid-row: 1; }
+  .lead { margin-top: var(--s2); }
+  .hero-text > p, .buttons { grid-column: 1 / -1; }
   #nav { padding-top: 0; padding-bottom: var(--s1); }
   .brand { margin-right: auto; }
   #nav nav { order: 3; flex-basis: 100%; margin-left: 0; }
+  .nav-links { gap: 0; }
+  .nav-links li:last-child { display: none; }
   .buttons { flex-direction: column; align-items: stretch; }
   .shots, .skill { grid-template-columns: 1fr; }
   .skill { gap: 0; }
